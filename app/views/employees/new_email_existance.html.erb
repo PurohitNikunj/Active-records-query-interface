@@ -1,0 +1,23 @@
+<div class="body-container">
+    <% if flash[:notice] %>
+        <p class="alert alert-success"><%= flash[:notice] %></p>
+    <% end %>
+
+    <% if flash[:alert] %>
+        <p class="alert alert-danger"> <%= flash[:alert] %> </p>
+    <% end %>
+    <br>
+    <%= form_with url: email_existance_path do |f| %>
+        <div class="mb-3">
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+        </div>
+
+        <div class="mb-3">
+            <%= f.submit "Submit" %>
+        </div>
+
+    <% end %>
+
+    <%= link_to "Back", employees_path, class:"btn btn-info" %>
+</div>

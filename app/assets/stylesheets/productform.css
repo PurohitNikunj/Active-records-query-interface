@@ -1,0 +1,26 @@
+.error-msg{
+    color: red;
+    text-align: center;
+}
+
+.productform{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid lightgrey;
+    box-shadow: 2px 2px 5px gray, 2px -2px 5px gray;
+    width: 50%;
+}
+
+.registration{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.disable{
+    pointer-events:none;
+    background:lightgrey;
+}
