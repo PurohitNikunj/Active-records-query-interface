@@ -10,11 +10,11 @@ class EmployeesController < ApplicationController
 
   # ======== Edit Employee =======
   def edit
-    @edit_employee = Employee.find_or_initialize_by(params[:id])
+    @edit_employee = Employee.find(params[:id])
   end
 
   def update
-    @edit_employee = Employee.find(params[:id])
+    @edit_employee = Employee.find_or_initialize_by(id: params[:id])
     if @edit_employee.update(employee_params)
       redirect_to
     else
@@ -31,7 +31,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    @new_employee = Employee.new(employee_params)
+    @new_employee = Employee.find_or_create_by(employee_params)
     if @new_employee.save
       flash[:notice] = "Successfully registered new Employee named #{@new_employee.first_name}"
       redirect_to employees_path
@@ -87,6 +87,10 @@ class EmployeesController < ApplicationController
   # ========= Condition-Overriding ========
   def overriding
     @reselect = Employee.select(:first_name, :last_name).reselect(:id).where("id = 10")
+    @unscope = Employee.order(age: :desc).unscope(:order)
+    @only = Employee.group(:no_of_orders).having("no_of_orders > 25").only(:group)
+    @reverse_order = Employee.order(:salary).reverse_order
+    @reorder = Employee.order(:salary).reorder(:id)
   end
 
   # ======= params method =======
