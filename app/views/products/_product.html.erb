@@ -1,0 +1,42 @@
+<div id="<%= dom_id product %>">
+ 
+  <p>
+    <strong>ID:</strong>
+    <%= product.id %>
+  </p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= product.title %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= product.description %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= product.price %>
+  </p>
+
+  <p>
+    <strong>Capacity:</strong>
+    <%= product.capacity %>
+  </p>
+
+  <p>
+    <strong>Is active:</strong>
+    <%= product.is_active %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= product.status %>
+  </p>
+
+  <p>
+    <strong>Total Count:</strong>
+    <%= Product.unscoped.joins(:orders).where(id: product.id).count %>
+
+</div>
