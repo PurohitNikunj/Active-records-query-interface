@@ -1,0 +1,145 @@
+<div class="body-container">
+    <div class="product-customer-order">
+        <a href="<%= products_path %>", class="btn btn-info" > Products </a>
+        <a href="<%= customers_path %>", class="btn btn-info" > Customers </a>
+        <a href="<%= orders_path %>", class="btn btn-info" > Orders </a>
+    </div>
+
+    <div class="four-button">
+    <%# =========== Top 3 Customer with sum of Qty. ============ %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1", style="margin-bottom:3%;">
+            Top 3 Cus with Qty.
+        </button>
+
+        <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel1">Top 3 Cus with Qty.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>Customer_id</th>
+                        <th>Quantity</th>
+                    </tr>
+                    <% @orders.limit(3).group(:customer_id).order("sum_quantity DESC, product_id ASC").sum(:quantity).each do |o| %>
+                        <tr>
+                            <td><%= o[0] %></td>
+                            <td><%= o[1] %></td>
+                        </tr>
+                    <% end %>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div> 
+
+
+    <%# ========== Top 3 Customer with sum of price ========== %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2", style="margin-bottom:3%;" >
+            Top 3 Cus with price
+        </button>
+
+        <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel2">Top 3 Cus with price</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>Customer_id</th>
+                        <th>Price</th>
+                    </tr>
+                    <% @orders.limit(3).group(:customer_id).order("sum_total_price DESC, product_id ASC").sum(:total_price).each do |o| %>
+                        <tr>
+                            <td><%= o[0] %></td>
+                            <td><%= o[1] %></td>
+                        </tr>
+                    <% end %>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+
+    <%# ============ Top 5 customer with max booked order ============== %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop3", style="margin-bottom:3%;" >
+            Top 5 Cus with max-booked order
+        </button>
+
+        <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel3">Top 5 Cus with max booked order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>Customer_id</th>
+                        <th>No-of-Booked-order</th>
+                    </tr>
+                    <% @orders.limit(5).group(:customer_id).where("status = 0").order("count_status DESC").count(:status).each do |o| %>
+                        <tr>
+                            <td><%= o[0] %></td>
+                            <td><%= o[1] %></td>
+                        </tr>
+                    <% end %>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+
+    <%# ======== Top 5 Customer with max cancelled order =========  %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop4", style="margin-bottom:3%;" >
+            Top 5 Cus with max-cancelled order
+        </button>
+
+        <div class="modal fade" id="staticBackdrop4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel4" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel4">Top 5 Cus with max Cancelled order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>Customer_id</th>
+                        <th>No-of-cancelled</th>
+                    </tr>
+                    <% @orders.limit(5).group(:customer_id).where("status = 1").order("count_status DESC").count(:status).each do |o| %>
+                        <tr>
+                            <td><%= o[0] %></td>
+                            <td><%= o[1] %></td>
+                        </tr>
+                    <% end %>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+    <%# ========================================= %>
+    </div>
+</div>

@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  
+  resources :orders
+  resources :customers
+  resources :products
+  get 'root', to: "roots#root"
+  get 'default_scope', to: "products#default_scope"
   get 'boots/index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  post 'search', to: "orders#search"
+  get 'filter', to: "orders#filter"
+  post 'filter', to: "orders#post_filter"
   resources :employees
   get 'email_existance', to: "employees#new_email_existance"
   post 'email_existance', to: "employees#create_email_existance"
