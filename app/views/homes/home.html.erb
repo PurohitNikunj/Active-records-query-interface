@@ -1,0 +1,59 @@
+<%= render 'shared/navbar' %> 
+<div class="body-container">
+  <div id="events">
+    <% @events.each do |event| %>
+      <%= render 'events/event', event: event %>
+      <% if @user.present? && EventUser.where(event_id: event.id, user_id: @user[0].id, status: 1).empty? %>
+        <a href="join_event/<%= event.id %>", class="btn btn-primary">Join <%= event.name %> </a>
+      <% end %>
+      <% if @user.present? %>
+        <a href="/comment/<%= event.id %>", class="btn btn-primary"> Comment </a>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="table-form">
+    <table>
+      <tr>
+        <th>Comment</th>
+        <th>Event</th>
+        <th>Commented_by</th>
+        <% if @user.present? %>
+          <th>Action</th>
+        <% end %>
+        <th>Total-Likes</th>
+        <th>liked-by</th>
+      <tr>
+
+      <% @comments.each do |comment| %>
+        <tr>
+          <td> <%= comment.comment %> </td>
+          <td> <%= Event.find(comment.event_id).name %> </td>
+          <td> <%= User.unscoped.find(comment.user_id).fname %> </td>
+          <% if @user.present? %>
+            <% if @user[0].id == User.unscoped.find(comment.user_id).id %>
+              <td> <%= link_to "Delete Comment", delete_comment_path(comment.id), class:"btn btn-danger" %> </td>
+            <% else %>
+              <% if comment.liked_by.include? @user[0].id %>
+                <td> <%= link_to "Unlike Comment", unlike_comment_path(comment.id), class:"btn btn-warning" %> </td>
+              <% else %>
+                <td> <%= link_to "Like Comment", like_comment_path(comment.id), class:"btn btn-primary" %> </td>
+              <% end %>
+            <% end %>
+          <% end %>
+          <td> <%= comment.liked_by.count %> </td>
+          <% if comment.liked_by.count != 0 %>
+            <td>
+              <% comment.liked_by.each do |l_id| %>
+                <%= User.unscoped.find(l_id).fname %>,
+              <% end %>
+            </td>
+          <% else %>
+            <td> None </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+<%= render 'shared/navbar' %>
+
+<%= form_with html: {class: 'table-form'}, url: comment_path, model: @comment  do |f| %>
+    
+    <div class="mb-3">
+        <%= f.label :Comment %>
+        <%= f.text_area :comment, class:"form-control" %>
+        <% @comment.errors.full_messages_for(:comment).each do |msg| %>
+            <div class="error-msg">
+                <%= msg %>
+            </div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= f.submit "Add Comment" %>
+    </div>
+
+<% end %>

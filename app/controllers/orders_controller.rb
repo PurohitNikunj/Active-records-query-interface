@@ -63,14 +63,14 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
-    @p_ids = Array.new {Hash.new}
-    @c_ids = Array.new {Hash.new}
-    Product.unscoped.select(:id, :title).each do |p|
-      @p_ids.push(p.id => p.title)
+    @p_ids = Array.new
+    @c_ids = Array.new
+    Product.unscoped.select(:id).each do |p|
+      @p_ids.push(p.id)
     end
-
-    Customer.unscoped.select(:id, :fname).each do |c|
-      @c_ids.push(c.id => c.fname)
+ 
+    Customer.unscoped.select(:id).each do |c|
+      @c_ids.push(c.id)
     end
   end
 
@@ -81,8 +81,10 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
-    price = Product.unscoped.select(:price).where("id = #{@order.product_id}")
+    
+    price = Product.unscoped.select(:price).where(id: params[:order][:product_id])
     @order.total_price = @order.quantity * price[0].price
+
     respond_to do |format|
       if @order.save
         format.html { redirect_to order_url(@order), notice: "Order was successfully created." }

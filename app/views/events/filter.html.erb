@@ -1,0 +1,26 @@
+<%= render 'shared/navbar' %>
+<div class="body-container">
+    <% @events.each do |event| %>
+        <br>
+        <p>
+            <strong>Name:</strong>
+            <%= event.name %>
+        </p>
+
+        <p>
+            <strong>Description:</strong>
+            <%= event.description %>
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            <%= event.event_date %>
+        </p>
+
+        <p>
+            <strong>Category:</strong>
+            <%= Category.select(:category_type).find(event.category_id).category_type %>
+        </p>
+        ___________________
+    <% end %>
+</div>
