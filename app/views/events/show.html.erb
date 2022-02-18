@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="body-container">
+  <%= render @event %>
+
+  <div>
+    <%= link_to "Edit this event", edit_event_path(@event), class:"btn btn-success" %> |
+    <%= link_to "Back to events", events_path, class:"btn btn-info" %>
+
+    <%= button_to "Destroy this event", @event, method: :delete, class:"btn btn-danger", style:"margin-left:60px; margin-top:5px;" %>
+  </div>
+</div>

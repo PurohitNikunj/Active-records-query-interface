@@ -1,0 +1,22 @@
+<div id="<%= dom_id event %>">
+  <p>
+    <strong>Name:</strong>
+    <%= event.name %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= event.description %>
+  </p>
+
+  <p>
+    <strong>Event date:</strong>
+    <%= event.event_date %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= Category.select(:category_type).find(event.category_id).category_type %>
+  </p>
+
+</div>

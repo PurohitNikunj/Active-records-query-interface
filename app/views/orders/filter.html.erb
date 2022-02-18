@@ -1,0 +1,32 @@
+<div class="body-container">
+
+    <% if flash[:alert] %>
+        <p class="alert alert-danger"><%= flash[:alert] %></p>
+    <% end %>
+
+    <%= form_with html: {class: "table-form" }, url: filter_path do |f| %>
+
+        <div class="mb-3">
+            <%= f.label :Status %>
+            <%= f.select :status, Order.statuses.keys, class:"form-control"%>
+        </div>
+
+        <div class="mb-3">
+            <%= f.label :Max_price %>
+            <%= f.number_field :max_price, class:"form-control" %>
+        </div>
+
+        <div class="mb-3">
+            <%= f.label :Min_price %>
+            <%= f.number_field :min_price, class:"form-control" %>
+        </div>
+
+        <div class="mb-3">
+            <%= f.submit "Apply-Filters" %>
+        </div>
+
+    <% end %>
+
+    <%= link_to "Back to orders", orders_path, class:'btn btn-info' %>
+
+</div>

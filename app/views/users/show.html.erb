@@ -1,0 +1,31 @@
+<%= render 'shared/navbar' %>
+<div class="body-container">
+    <p>
+        <strong>First_name:</strong>
+        <%= @user[0].fname %>
+    </p>
+
+    <p>
+        <strong>Last_name:</strong>
+        <%= @user[0].lname %>
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        <%= @user[0].email %>
+    </p>
+
+    <p>
+        <strong>Address:</strong>
+        <%= @address.address %>
+    </p>
+
+    <h4 style="color:tomato" > <%= @user[0].fname %>  Joined-in </h4>
+
+    <div id="events">
+            <% @joinedevents.each do |je| %>
+                <%= render 'events/event', event: je %>
+                <a href="/leave/<%= je.id %>", class="btn btn-danger"> Leave <%= je.name %> </a>
+            <% end %>
+    </div>
+</div>

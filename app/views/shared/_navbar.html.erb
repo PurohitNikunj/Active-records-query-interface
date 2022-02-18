@@ -1,0 +1,41 @@
+<% c = Category.select(:id, :category_type) %>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <% if @user.present? %>
+                <li class="nav-item">
+                    <%= link_to "Events", events_path, class:"nav-link", aria_current:"page" %>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Filter
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="/filter/<%= c[0].id %>"><%= c[0].category_type %></a></li>
+                        <li><a class="dropdown-item" href="/filter/<%= c[1].id %>"><%= c[1].category_type %></a></li>
+                        <li><a class="dropdown-item" href="/filter/<%= c[2].id %>"><%= c[2].category_type %></a></li>
+                        <li><a class="dropdown-item" href="/filter/<%= c[3].id %>"><%= c[3].category_type %></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout/<%= @user[0].id %>", class="nav-link", aria-current="page" %>Logout</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="<%= user_path(@user[0].id) %>", class="nav-link", area-current="page"> <i class="bi bi-person-circle", style="margin-left:50px;"></i> </a>
+                </li>
+            <% else %>
+                <li class="nav-item">
+                    <%= link_to "Log-in", login_path, class:"nav-link", aria_current:"page" %>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+  </div>
+</nav>

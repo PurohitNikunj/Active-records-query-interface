@@ -1,0 +1,46 @@
+<div class="body-container"><p style="color: green"><%= notice %></p>
+
+    <h1>Orders</h1>
+
+    <% if flash[:alert] %>
+        <p class="alert alert-danger"> <%= flash[:alert] %> </p>
+    <% end %>
+
+    <%= form_with url: search_path do |f| %>
+      <div class="search-form">
+        <%= f.text_field :search, class:"form-control", placeholder:"search by product-name" %>
+        <%= f.submit "Search", style:"background-color:lightgreen;" %>
+      </div>
+    <% end %>
+
+    <%= link_to "Filters", filter_path %>
+
+    <div id="orders">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Quantity</th>
+          <th>Total-price</th>
+          <th>Status</th>
+          <th>Product-id</th>
+          <th>Customer-id</th>
+          <th>Action</th>
+        </tr>
+
+        <% @orders.each do |o| %>
+          <tr>
+            <td> <%= o.id %> </td>
+            <td> <%= o.quantity %> </td>
+            <td> <%= o.total_price %> </td>
+            <td> <%= o.status %> </td>
+            <td> <a href="<%= product_path(o.product_id) %>"> <%= o.product_id %> </td>
+            <td> <a href="<%= customer_path(o.customer_id) %>"> <%= o.customer_id %> </td>
+            <td> <%= link_to "Show", o, class:"btn btn-info" %> </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
+  <%= link_to "New order", new_order_path, class:"btn btn-info" %>
+
+</div>
