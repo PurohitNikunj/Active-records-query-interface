@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   resources :employees
+  get 'search', to: "employees#get_search"
+  post 'search', to: "employees#post_search"
+  
   get 'email_existance', to: "employees#new_email_existance"
   post 'email_existance', to: "employees#create_email_existance"
   get 'queryset', to: "employees#queryset"

@@ -1,0 +1,41 @@
+<div id="<%= dom_id employee %>">
+  <%# <p> %>
+    <%# <strong>Employee name:</strong> %>
+    <td><%= employee.employee_name %></td>
+  <%# </p> %>
+
+  <%# <p>
+    <strong>Email:</strong> %>
+    <td><%= employee.email %></td>
+  <%# </p> %>
+
+  <%# <p> %>
+    <%# <strong>Gender:</strong> %>
+    <td><%= employee.gender %></td>
+  <%# </p> %>
+
+  <%# <p> %>
+    <%# <strong>Hobbies:</strong> %>
+    <td>
+      <% employee.hobbies.each do |h| %>
+        <%= h %>,
+      <% end %>
+    </td>    
+  <%# </p> %>
+
+  <%# <p> %>
+    <%# <strong>Mobile number:</strong> %>
+    <td><%= employee.mobile_number %></td>
+  <%# </p> %>
+
+  <%# <p>
+    <strong>Birth date:</strong> %>
+    <td><%= employee.birth_date %></td>
+  <%# </p> %>
+
+  <%# <p> %>
+    <%# <strong>Document:</strong> %>
+    <td><%= employee.document %></td>
+  <%# </p> %>
+
+</div>

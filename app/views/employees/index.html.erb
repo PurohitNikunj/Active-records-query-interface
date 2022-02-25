@@ -1,46 +1,31 @@
+<p style="color: green"><%= notice %></p>
 <div class="body-container">
-    
-    <% if flash[:notice] %>
-        <p class="alert alert-success"><%= flash[:notice] %></p>
-    <% end %>
+  <h1>Employees</h1>
 
-    <div class="heading">
-        <h1>Employee-home</h1>
-    </div>
+  <%= link_to "Search", search_path, class:"btn btn-primary" %>
 
-    <div class="table-form">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>First-Name</th>
-                <th colspan="2" >Actions</th>
-            </tr>
+  <div id="employees", style="margin-top:10px">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Hobbies</th>
+        <th>Mobile</th>
+        <th>B'date</th>
+        <th>Document</th>
+        <th>Action</th>
+      </tr>
 
-            <% @employees.each do |employee| %>
-                <tr>
-                    <td><%= employee.id %></td>
-                    <td> <a href="<%= employee_path(employee) %>"> <%= employee.first_name %> </a> </td>
-                    <td> <a href="<%= edit_employee_path(employee) %>" class="btn btn-success"> Update </td>
-                    <td> <%= link_to "Delete", employee_path(employee), class:"btn btn-danger", data_turbo:"true", data_turbo_method:"delete" %> </td>
-                </tr>
-            <% end %>
-        </table>
-    </div>
+      <% @employees.each do |employee| %>
+        <tr>
+          <%= render employee %>
+          <td><%= link_to "Show", employee, class:"btn btn-primary" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 
-    <div class="bottom-button">
-        <a class="btn btn-primary" href="<%= new_employee_path %>">Add New Employee</a>
-    </div>
-
-    <div>
-        <a class="btn btn-dark" href="/email_existance">Email-Existance</a>
-    </div>
-
-    <div>
-        <a class="btn btn-warning" href="/overriding">Over-Riding</a>
-    </div>
-
-    <div>
-        <a class="btn btn-info" href="queryset">Query-Set</a>
-    </div>
+  <%= link_to "New employee", new_employee_path, class:"btn btn-info", style:"margin-top:10px" %>
 
 </div>

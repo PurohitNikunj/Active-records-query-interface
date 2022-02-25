@@ -1,102 +1,127 @@
 class EmployeesController < ApplicationController
+  before_action :set_employee, only: %i[ show edit update destroy ]
 
+  # GET /employees or /employees.json
   def index
     @employees = Employee.all
   end
 
+  # GET /employees/1 or /employees/1.json
   def show
-    @employee = Employee.find(params[:id])
   end
 
-  # ======== Edit Employee =======
-  def edit
-    @edit_employee = Employee.find(params[:id])
-  end
-
-  def update
-    @edit_employee = Employee.find_or_initialize_by(id: params[:id])
-    if @edit_employee.update(employee_params)
-      redirect_to
-    else
-      render :edit, status: :unprocessable_entity
-    end
-    rescue ActiveRecord::StaleObjectError => errors
-      flash[:alert] = "You can't update right now"
-      render :edit, status: :unprocessable_entity
-  end
-
-  # ======= New Employee ========
+  # GET /employees/new
   def new
-    @new_employee = Employee.new
+    @employee = Employee.new
+    @employee.employee_addresses.build
   end
 
+  # GET /employees/1/edit
+  def edit
+  end
+
+  # POST /employees or /employees.json
   def create
-    @new_employee = Employee.find_or_create_by(employee_params)
-    if @new_employee.save
-      flash[:notice] = "Successfully registered new Employee named #{@new_employee.first_name}"
-      redirect_to employees_path
-    else
-      flash[:alert] = "Something was wrong"
-      render :new, status: :unprocessable_entity
+    @employee = Employee.new(employee_params)
+    @employee.document = params[:employee][:document].original_filename
+    cricket = params[:employee][:cricket]
+    volley = params[:employee][:volleyball]
+    tt = params[:employee][:table_tennis]
+    if cricket == "1"
+      @employee.hobbies.push('cricket')
+    end
+    if volley == "1" 
+      @employee.hobbies.push('volleyball')
+    end
+    if tt == "1"
+      @employee.hobbies.push('table-tennis')
+    end
+    # @employee.employee_addresses.build
+    # binding.pry
+
+    respond_to do |format|
+      if @employee.save
+        format.html { redirect_to employee_url(@employee), notice: "Employee was successfully created." }
+        format.json { render :show, status: :created, location: @employee }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      end
     end
   end
 
-  # ======= Delete Employee =======
+  # PATCH/PUT /employees/1 or /employees/1.json
+  def update
+    @employee.skip = false
+    cricket = params[:employee][:cricket]
+    volley = params[:employee][:volleyball]
+    tt = params[:employee][:table_tennis]
+    if cricket == "1"
+      if @employee.hobbies.exclude? "cricket"
+        @employee.hobbies.push('cricket')
+      end
+    end
+    if volley == "1" 
+      if @employee.hobbies.exclude? "volleyball"
+        @employee.hobbies.push('volleyball')
+      end
+    end
+    if tt == "1"
+      if @employee.hobbies.exclude? "table-tennis"
+        @employee.hobbies.push('table-tennis')
+      end
+    end
+    respond_to do |format|
+      if @employee.update(edit_employee_params)
+        format.html { redirect_to employee_url(@employee), notice: "Employee was successfully updated." }
+        format.json { render :show, status: :ok, location: @employee }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /employees/1 or /employees/1.json
   def destroy
-    @employee = Employee.find(params[:id])
     @employee.destroy
-    redirect_to employees_path
-  end
 
-  # ======= Email-Existance =======
-  def new_email_existance
-  end
-
-  def create_email_existance
-    email = Employee.find_by(email: params[:email])
-    if email.present?
-      flash[:notice] = "yess user-account exist with this email-id "
-      redirect_to employee_path(email)
-    else
-      flash[:alert] = "Oops!user-account doesn't exist with this email-id"
-      render :new_email_existance
+    respond_to do |format|
+      format.html { redirect_to employees_url, notice: "Employee was successfully destroyed." }
+      format.json { head :no_content }
     end
   end
 
-  # ======= Query-Set =======
-  def queryset
-    @employees = Employee.all
+  def get_search
+    if flash[:alert]
+      flash[:alert].clear
+    end
   end
 
-  # ====== Increase Order ======
-  def inc_order
-    employee = Employee.find(params[:id])
-    employee.no_of_orders = employee.no_of_orders + 1
-    employee.save
-    redirect_to employee_path(employee)
+  def post_search
+    if params[:query].empty?
+      flash[:alert] = "Please enter something!!"
+      render :get_search
+    end
+    @employees = Employee.where("employee_name LIKE '%#{params[:query]}%'")
+    if @employees.empty?
+      flash[:alert] = "No result found"
+      render :get_search
+    end
   end
 
-  # ======= Decrease Order =======
-  def dec_order
-    employee = Employee.find(params[:id])
-    employee.no_of_orders = employee.no_of_orders - 1
-    employee.save
-    redirect_to employee_path(employee)
-  end
+  # private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_employee
+      @employee = Employee.find(params[:id])
+    end
 
-  # ========= Condition-Overriding ========
-  def overriding
-    @reselect = Employee.select(:first_name, :last_name).reselect(:id).where("id = 10")
-    @unscope = Employee.order(age: :desc).unscope(:order)
-    @only = Employee.group(:no_of_orders).having("no_of_orders > 25").only(:group)
-    @reverse_order = Employee.order(:salary).reverse_order
-    @reorder = Employee.order(:salary).reorder(:id)
-  end
+    # Only allow a list of trusted parameters through.
+    def employee_params
+      params.require(:employee).permit(:employee_name, :email, :password, :password_confirmation, :gender, :hobbies, :mobile_number, :birth_date, :document, employee_addresses_attributes: [:house_name, :street_name, :road])
+    end
 
-  # ======= params method =======
-  private
-  def employee_params
-    params.require(:employee).permit(:id, :first_name, :last_name, :email, :age, :no_of_orders, :full_time_available, :salary, :lock_version)
-  end
-
+    def edit_employee_params
+      params.require(:employee).permit(:employee_name, :email, :gender, :hobbies, :mobile_number, :birth_date, employee_addresses_attributes: [:id, :house_name, :street_name, :road])
+    end
 end

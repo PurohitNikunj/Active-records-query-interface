@@ -1,13 +1,12 @@
 <div class="body-container">
-    
-    <div class="heading">
-        <h1>Employee Updation</h1>
-    </div>
-    
-    <%= render "employee_form", employee: @edit_employee %>
+<h1>Editing employee</h1>
 
-    <div class="bottom-button">
-        <%= link_to "Employee Home", employees_path, class:"btn btn-info" %>
-    </div>
+<%= render "form", employee: @employee %>
 
+<br>
+
+<div>
+  <%= link_to "Show this employee", @employee, class:"btn btn-primary" %> |
+  <%= link_to "Back to employees", employees_path, class:"btn btn-info" %>
+</div>
 </div>

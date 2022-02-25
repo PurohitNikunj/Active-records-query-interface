@@ -1,0 +1,21 @@
+<div class="body-container">
+    <table class="table-form", style="margin-top:15px">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Hobbies</th>
+            <th>Mobile</th>
+            <th>B'date</th>
+            <th>Document</th>
+        </tr>
+
+        <% @employees.each do |employee| %>
+            <tr>
+            <%= render employee %>
+            </tr>
+        <% end %>
+    </table>
+
+    <%= link_to "More Search", search_path, class:"btn btn-primary", style:"margin-top:15px" %>
+</div>
