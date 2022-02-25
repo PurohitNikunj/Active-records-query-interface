@@ -1,17 +1,11 @@
 <div class="body-container">
-    
-    <% if flash[:alert] %>
-        <p class="alert alert-danger"><%= flash[:alert] %></p>
-    <% end %>
-    
-    <div class="heading">
-        <h1>Employee Registration</h1>
-    </div>
-    
-    <%= render "employee_form", employee: @new_employee %>
+  <h1>New employee</h1>
 
-    <div class="bottom-button">
-        <%= link_to "Employee Home", employees_path, class:"btn btn-info" %>
-    </div>
+  <%= render "form", employee: @employee %>
+  
+  <br>
 
+  <div>
+    <%= link_to "Back to employees", employees_path, class:"btn btn-info" %>
+  </div>
 </div>

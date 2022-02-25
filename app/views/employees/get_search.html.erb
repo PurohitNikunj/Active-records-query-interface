@@ -1,0 +1,20 @@
+<div class="body-container">
+<% if flash[:alert].present? %>
+    <p class="alert alert-danger"> <%= flash[:alert] %> </p>
+<% end %>
+
+
+<%= form_with html: {class: 'table-form'}, url: search_path do |f| %>
+
+    <div class="mb-3">
+        <%= f.label :search %>
+        <%= f.text_field :query, class:"form-control", placeholder: "Search by Employee-Name" %>
+    </div>
+    <p id="demo"></p>
+    <div class="mb-3">
+        <%= f.submit "Search", style:"background-color:lightgreen" %>
+    </div>
+<% end %>
+
+<%= link_to "Back", employees_path, class:"btn btn-info" %>
+</div>

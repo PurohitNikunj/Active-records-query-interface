@@ -1,47 +1,25 @@
+<p style="color: green"><%= notice %></p>
+
 <div class="body-container">
+  <table class="table-form">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Hobbies</th>
+      <th>Mobile</th>
+      <th>B'date</th>
+      <th>Document</th>
+    </tr>
 
-    <% if flash[:notice] %>
-        <p class="alert alert-success"><%= flash[:notice] %></p>
-    <% end %>
-    
-    <div class="heading">
-        <h1>Employee-info</h1>
-    </div>
-    
-    <div class="table-form">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>First_Name</th>
-                <th>Last_Name</th>
-                <th>Email</th>
-                <th>Age</th>
-                <th>No_Of_Orders</th>
-                <th>Full_time_available</th>
-                <th>Salary</th>
-            </tr>
+    <tr>
+      <%= render @employee %>
+    </tr>
+  <table>
+  <div style="margin-top:15px">
+    <%= link_to "Edit this employee", edit_employee_path(@employee), class:"btn btn-success" %> |
+    <%= link_to "Back to employees", employees_path, class:"btn btn-info" %>
 
-            <tr>
-                <td> <%= @employee.id %> </td>
-                <td><%= @employee.first_name %></td>
-                <td><%= @employee.last_name %></td>
-                <td><%= @employee.email %></td>
-                <td><%= @employee.age %></td>
-                <td><%= @employee.no_of_orders %></td>
-                <td><%= @employee.full_time_available %></td>
-                <td><%= @employee.salary %></td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="bottom-button">
-        <%= link_to "Employee Home", employees_path, class:"btn btn-info" %>
-    </div>
-
-    <br>
-    <div class="bottom-button-2">
-        <a href="/inc_order/<%= @employee.id %>" class="btn btn-success">Increase-Order</a>
-        <a href="/dec_order/<%= @employee.id %>" class="btn btn-danger">Decrease-Order</a>
-    </div>
-
+    <%= button_to "Destroy this employee", @employee, method: :delete, class:"btn btn-danger", style:"margin-top:10px; margin-left:60px" %>
+  </div>
 </div>

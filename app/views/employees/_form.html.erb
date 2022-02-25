@@ -1,0 +1,93 @@
+<div class="body-container">
+<%= form_with model: employee do |form| %>
+  <% if employee.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+
+      <ul>
+        <% employee.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :employee_name, style: "display: block" %>
+    <%= form.text_field :employee_name, class:"form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.email_field :email, class:"form-control" %>
+  </div>
+
+  <% if @employee.new_record? %>
+    <div>
+      <%= form.label :password, style: "display: block" %>
+      <%= form.password_field :password, class:"form-control" %>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation, style: "display: block" %>
+      <%= form.password_field :password_confirmation, class:"form-control" %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :gender, style: "display: block" %>
+    <%= form.radio_button :gender, "m" %>
+    <%= form.label :gender_male, "MALE" %>
+    <%= form.radio_button :gender, "f" %>
+    <%= form.label :gender_female, "FEMALE" %>
+  </div>
+
+  <div>
+    <%= form.label :hobbies, style: "display: block" %>
+    <%= form.check_box :cricket %>
+    <%= form.label :cricket %>
+    <%= form.check_box :volleyball %>
+    <%= form.label :volleyball %>
+    <%= form.check_box :table_tennis %>
+    <%= form.label :table_tennis %>
+  </div>
+
+  <div>
+    <%= form.label :mobile_number, style: "display: block" %>
+    <%= form.telephone_field :mobile_number, class:"form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :birth_date, style: "display: block" %>
+    <%= form.date_field :birth_date, class:"form-control" %>
+  </div>
+
+  <% if @employee.new_record? %>
+    <div>
+      <%= form.label :document, style: "display: block" %>
+      <%= form.file_field :document, class:"form-control" %>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :employee_addresses do |addform| %>
+    <div class="mb-3">
+      <%= addform.label :house_name %>
+      <%= addform.text_field :house_name, class:"form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= addform.label :street_name %>
+      <%= addform.text_field :street_name, class:"form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= addform.label :road %>
+      <%= addform.text_field :road, class:"form-control" %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit class:"btn btn-success" %>
+  </div>
+<% end %>
+</div>

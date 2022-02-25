@@ -1,7 +1,14 @@
 class Employee < ApplicationRecord
-    validates :first_name, :last_name, :email, :age, :no_of_orders, :salary, presence: true
-    validates :first_name, :last_name, format: {with: /\A[a-zA-Z]+\Z/, message: "only letters are allowed"}
-    validates :email, format: {with: /\A(\S+)@(.+)\.(\S+)\z/, message: "enter valid email"}, uniqueness: true
-    validates :age, :no_of_orders, :salary, numericality: {only_integer: true, message: "must be number"}
+    attr_accessor :skip
+    has_secure_password
+    has_many :employee_addresses, dependent: :destroy
+    validates :employee_name, :email, :gender, :mobile_number, :birth_date, :document, presence: true
+    validates :password, presence: true, if: :skip
+    validates_confirmation_of :password, if: :skip
+    validates_presence_of :password_confirmation, if: :skip
+    serialize :hobbies, Array
+    accepts_nested_attributes_for :employee_addresses
+    # validates :mobile_number, numericality: {only_integer: true, message: "must be number"},
+    # length: {is: 10, message: "must be of ten digits"}, uniqueness: true
 
 end
