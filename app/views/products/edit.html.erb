@@ -1,0 +1,12 @@
+<div class="body-container">
+<h1>Editing product</h1>
+
+<%= render "form", product: @product %>
+
+<br>
+
+<div>
+  <%= link_to "Show this product", @product, class:"btn btn-success" %> |
+  <%= link_to "Back to products", products_path, class:"btn btn-info" %>
+</div>
+</div>

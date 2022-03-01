@@ -1,0 +1,37 @@
+<div class="body-container">
+  <% if notice %>
+    <p class="alert alert-info"><%= notice %></p>
+  <% end %>
+
+  <% if alert %>
+    <p class="alert alert-danger">No result found</p>
+  <% end %>
+
+  <h1>Customers</h1>
+
+  <%= form_with url: search_path do |form| %>
+    <%= form.text_field :search, placeholder: "search by customer-name" %>
+    <%= form.submit "search", style:"background-color:lightgreen" %>
+  <% end %>
+
+  <div id="customers", style="margin-top:15px">
+    <table>
+      <tr>
+        <th>Customer-Name</th>
+        <th>Action</th>
+      </tr>
+      <% @customers.each do |customer| %>
+        <tr>
+          <%= render customer %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <%= link_to "New customer", new_customer_path, class:"btn btn-info", style:"margin-top:10px" %>
+
+  <%= link_to "Delete Customer", delete_customer_path, class:"btn btn-warning", style:"margin-top:10px" %>
+  
+  <%= link_to "Preview", preview_path, class:"btn btn-info", style:"margin-top:10px" %>
+
+</div>

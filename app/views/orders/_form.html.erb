@@ -1,0 +1,26 @@
+<div class="body-container">
+<%= form_with model: order, url: product_orders_path(@product), html: {class: 'table-form'} do |form| %>
+  <% if order.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% order.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :quantity, style: "display: block" %>
+    <%= form.number_field :quantity, class:"form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class:"btn btn-success"%>
+  </div>
+<% end %>
+
+<%= link_to "Back", product_path(@product), class:"btn btn-info" %>
+</div>
