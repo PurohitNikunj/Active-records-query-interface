@@ -1,0 +1,42 @@
+<div class="body-container">
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+
+<table class="table-form">
+  <tr>
+    <th>Product-Name</th>
+  </tr>
+  <tr>
+    <%= render @product %>
+  </tr>
+</table>
+
+<div style="margin-top:5px">
+  <%= link_to "Edit this product", edit_product_path(@product), class:"btn btn-success" %> |
+  <%= link_to "Back to products", products_path, class:"btn btn-info" %>
+
+  <%= button_to "Destroy this product", @product, method: :delete, class:"btn btn-danger", style:"margin-top:5px; margin-left:60px" %>
+</div>
+
+<div class="table-form">
+  <table>
+    <tr>
+      <th>Product-ID</th>
+      <th>Order-ID</th>
+      <th>Order-qty.</th>
+      <th colspan=2>Action</th>
+    </tr>
+    <% @orders_of_product.each do |order| %>
+      <tr>
+        <td><%= @product.id %></td>
+        <%= render "orders/order", order: order %>
+        <td><%= link_to "Edit", edit_product_order_path(@product, order), class:"btn btn-success" %></td>
+        <td><%= button_to "Delete", product_order_path(@product, order), method: :delete, class:"btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= link_to "Place New Order",new_product_order_path(@product.id), class:"btn btn-info" %>
+</div>

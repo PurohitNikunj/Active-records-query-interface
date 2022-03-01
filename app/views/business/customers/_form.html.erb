@@ -1,0 +1,22 @@
+<%= form_with model: customer, html: {class: 'table-form'} do |form| %>
+  <% if customer.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+        <% customer.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :customer_name, style: "display: block" %>
+    <%= form.text_field :customer_name, class:"form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class:"btn btn-success"%>
+  </div>
+<% end %>

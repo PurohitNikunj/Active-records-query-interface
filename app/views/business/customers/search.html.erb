@@ -1,0 +1,14 @@
+<div class="body-container">
+    <table class="table-form">
+        <tr>
+            <th>Customer-name</th>
+        </tr>
+
+        <% @customers.each do |c| %>
+            <tr>
+                <td><%= c.customer_name %></td>
+            </tr>
+        <% end %>
+    </table>
+    <%= link_to "Back", customers_path, class:"btn btn-info", style:"margin-top:10px" %>
+</div>

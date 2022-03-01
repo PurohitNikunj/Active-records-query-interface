@@ -1,0 +1,10 @@
+<div class="body-container">
+    <%= form_with url: delete_customer_path, html: {class: 'table-form'} do |f| %>
+        <div class="mb-3">
+            <%= f.select :customer_name, @cus %>
+        </div>
+        <div class="mb-3">
+            <%= f.submit "Delete", class:"btn btn-danger" %>
+        </div>
+    <% end %>
+</div>
