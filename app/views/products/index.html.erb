@@ -1,0 +1,26 @@
+<% content_for :title do %>
+  <title>Merchant-Product</title>
+<% end %>
+
+<h1>Products</h1>
+
+<table>
+  <tr>
+    <th>Product-ID</th>
+    <th>Product-Name</th>
+    <th>Action</th>
+  </tr>
+
+  <div id="products">
+    <% @products.each do |product| %>
+      <tr>
+        <%= render product %>
+        <td><%= link_to "Show this product", product, class:"btn btn-info" %></td>
+      </tr>
+    <% end %>
+  </div>
+</table>
+
+<% if current_user["admin"] == true %>
+  <%= link_to "New product", new_product_path %>
+<% end %>

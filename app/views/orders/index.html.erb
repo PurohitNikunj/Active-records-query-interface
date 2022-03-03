@@ -1,0 +1,26 @@
+<% content_for :title do %>
+  <title>Merchant-Order</title>
+<% end %>
+
+<h1>Orders</h1>
+
+<table>
+  <tr>
+    <th>Order-Id</th>
+    <th>Qty</th>
+    <th>Action</th>
+  </tr>
+
+  <div id="orders">
+    <% @orders.each do |order| %>
+      <tr>
+        <%= render order %>
+        <td><%= link_to "Show this order", order, class:"btn btn-info" %></td>
+      </tr>
+    <% end %>
+  </div>
+</table>
+
+<% if current_user["admin"] == true %>
+  <%= link_to "New order", new_order_path %>
+<% end %>
