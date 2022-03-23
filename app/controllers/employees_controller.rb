@@ -6,6 +6,10 @@ class EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # ======== Edit Employee =======
@@ -70,23 +74,27 @@ class EmployeesController < ApplicationController
 
   # ====== Increase Order ======
   def inc_order
-    employee = Employee.find(params[:id])
-    employee.no_of_orders = employee.no_of_orders + 1
-    employee.save
-    redirect_to employee_path(employee)
+    @employee = Employee.find(params[:id])
+    @employee.no_of_orders = @employee.no_of_orders + 1
+    @employee.save
+    respond_to do |format|
+      format.js
+    end
   end
 
   # ======= Decrease Order =======
   def dec_order
-    employee = Employee.find(params[:id])
-    employee.no_of_orders = employee.no_of_orders - 1
-    employee.save
-    redirect_to employee_path(employee)
+    @employee = Employee.find(params[:id])
+    @employee.no_of_orders = @employee.no_of_orders - 1
+    @employee.save
+    respond_to do |format|
+      format.js
+    end
   end
 
   # ========= Condition-Overriding ========
   def overriding
-    @reselect = Employee.select(:first_name, :last_name).reselect(:id).where("id = 10")
+    @reselect = Employee.select(:first_name, :last_name).reselect(:id).where("id = 1")
     @unscope = Employee.order(age: :desc).unscope(:order)
     @only = Employee.group(:no_of_orders).having("no_of_orders > 25").only(:group)
     @reverse_order = Employee.order(:salary).reverse_order
