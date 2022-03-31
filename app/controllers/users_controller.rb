@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show edit update destroy profile post_profile password post_password]
 
   # GET /users or /users.json
   def index
@@ -60,16 +60,19 @@ class UsersController < ApplicationController
   end
 
   def profile
-    @user = User.find(params[:id])
   end
 
   def post_profile
-    @user = User.find(params[:id])
     if @user.present? && @user.password == params[:user][:password]
       if @user.update(email:params[:user][:email])
         respond_to do |format|
           format.js
         end
+      end
+    else
+      @user.errors.add(:pwd, "Password doesn't match")
+      respond_to do |format|
+        format.js
       end
     end
 
@@ -83,19 +86,19 @@ class UsersController < ApplicationController
   end
 
   def password
-    @user = User.find(params[:id])
   end
 
-  def post_passwword
-    @user = User.find(params[:id])
-    puts "======"
-    puts @user.password == params[:user][:old_pwd]
-    puts "======"
+  def post_password
     if @user.password == params[:user][:old_pwd]
       if @user.update(password:params[:user][:new_pwd])
         respond_to do |format|
           format.js 
         end
+      end
+    else
+      @user.errors.add(:old_pwd, "Please enter your correct old password")
+      respond_to do |format|
+        format.js 
       end
     end
   end

@@ -1,6 +1,6 @@
 var x = document.getElementById("msg");
 <% if @user.errors.any? %>
-    x.innerHTML = "Email can't be blank";
+    x.innerHTML = "<%= @user.errors.full_messages_for(:pwd)[0] %>";
 <% else %>
     x.innerHTML = "Updated Successfully";
 <% end %>

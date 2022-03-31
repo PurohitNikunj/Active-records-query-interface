@@ -11,13 +11,11 @@
         <%= f.password_field :password %>
     </div>
 
-
     <div>
         Subcription
         <%= f.check_box :subcription_email, id: 'sub_checkbox' %>
     </div>
 
-    
     <div id="sub_div" style="display:none">
         <%= f.label :subscription_email,"Enter Your Subscription Email", style: "display: block" %>
         <%= f.email_field :subscription_email, class:"f-control" %>
@@ -25,7 +23,7 @@
 
 
     <div>
-        <%= f.submit "Update", data: { disable_with: "saving..." } %>
+        <%= f.submit "Update" %>
     </div>
 
 <% end %>
