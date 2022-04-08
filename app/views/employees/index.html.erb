@@ -21,7 +21,7 @@
                     <td><%= employee.id %></td>
                     <td> <a href="<%= employee_path(employee) %>"> <%= employee.first_name %> </a> </td>
                     <td> <a href="<%= edit_employee_path(employee) %>" class="btn btn-success"> Update </td>
-                    <td> <%= link_to "Delete", employee_path(employee), class:"btn btn-danger", data_turbo:"true", data_turbo_method:"delete" %> </td>
+                    <td> <%=link_to "Delete", { controller: "employees", action: "destroy", id: employee} %> </td>
                 </tr>
             <% end %>
         </table>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to USER's-CRUD, <%= @user.name %></h1>
+    <p>
+      You have successfully signed up to site.
+    </p>
+    <p>
+      To go to Home page, just follow this link:
+      <%= link_to "Home", "http://127.0.0.1:3000/users" %>
+    </p>
+
+    <%= image_tag attachments['filename.jpg'].url, size: '200x200' %>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>
