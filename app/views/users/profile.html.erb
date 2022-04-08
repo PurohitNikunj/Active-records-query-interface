@@ -1,0 +1,43 @@
+<p id="msg"></p>
+
+<%= form_with model: @user, url: profile_path(@user), method: :post, local: false  do |f| %>
+    <div>
+        <%= f.label :Email %>
+        <%= f.text_field :email, id:"email" %>
+    </div>
+
+    <div id="password_div" style="display:none">
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+    </div>
+
+    <div>
+        Subcription
+        <%= f.check_box :subcription_email, id: 'sub_checkbox' %>
+    </div>
+
+    <div id="sub_div" style="display:none">
+        <%= f.label :subscription_email,"Enter Your Subscription Email", style: "display: block" %>
+        <%= f.email_field :subscription_email, class:"f-control" %>
+    </div>
+
+
+    <div>
+        <%= f.submit "Update" %>
+    </div>
+
+<% end %>
+
+<script>
+    document.getElementById("email").onchange = function() {
+        document.getElementById("password_div").style.display = "block";
+    }
+    document.getElementById("sub_checkbox").onclick = function() {
+        if (this.checked) {
+            document.getElementById("sub_div").style.display = "block";
+        }
+        else {
+            document.getElementById("sub_div").style.display = "none";
+        }
+    }
+</script>

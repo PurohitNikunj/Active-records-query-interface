@@ -1,0 +1,61 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :first_name, style: "display: block" %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= form.label :last_name, style: "display: block" %>
+    <%= form.text_field :last_name %>
+  </div>
+
+  <% if params[:action] == "new" %>
+    <div>
+      <%= form.label :email, style: "display: block" %>
+      <%= form.text_field :email %>
+    </div>
+
+    <div>
+      <%= form.label :password, style: "display: block" %>
+      <%= form.password_field :password %>
+    </div>
+
+    <div>
+      <%= form.label :subscription, style: "display: block" %>
+      <%= form.check_box :subscription, id: "checkbox" %>
+    </div>
+
+    <div id="sub_email_div", style= "display: none">
+      <%= form.label :subscription_email, style: "display: block" %>
+      <%= form.text_field :subscription_email %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+  let checkbox = document.getElementById("checkbox");
+  checkbox.onchange = function(){
+    if (this.checked) {
+      document.getElementById("sub_email_div").style.display = "Block";
+    }
+    else {
+      document.getElementById("sub_email_div").style.display = "none";
+    }
+  }
+</script>
